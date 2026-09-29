@@ -1,0 +1,8 @@
+metric,question,scope,statistic,value,unit,evidence_status
+snapshot_teams,How many national squads are in the market-value snapshot?,level,n,112,teams,cross-section
+log10_market_value_vs_elo,Does squad market value describe current strength?,level,pearson_r,0.911,correlation,cross-sectional association
+log10_market_value_vs_elo,Does squad market value describe current strength?,level,spearman_rho,0.924,correlation,cross-sectional association
+raw_eur_market_value_vs_elo,Does squad market value describe current strength?,level,pearson_r,0.657,correlation,cross-sectional association
+persistence_mae,Does market value reduce next-step forecast error?,change_t1,mae,26.09,elo_points,in-sample snapshot diagnostic
+elo_only_fitted_mae,Does market value reduce next-step forecast error?,change_t1,mae,26.28,elo_points,in-sample snapshot diagnostic
+elo_plus_log10_value_mae,Does market value reduce next-step forecast error?,change_t1,mae,26.14,elo_points,in-sample snapshot diagnostic

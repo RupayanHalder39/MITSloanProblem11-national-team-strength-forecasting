@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this research, please cite the paper and this repository."
+title: "The Persistence Ceiling: Testing Whether Form, Tournaments, and Squad Value Improve National-Team Elo Forecasts"
+abstract: >-
+  National-team federations routinely read recent form, tournament performance,
+  volatility, and squad value as signs that a team may be rising or fading. This
+  study separates the LEVEL, DIRECTION and ERROR roles of those signals by
+  testing the additional out-of-time forecasting information carried by richer
+  historical signals when current Elo is already known, on a frozen
+  national-team-season panel covering 1980-2026.
+type: software
+authors:
+  - family-names: Halder
+    given-names: Rupayan
+repository-code: "https://github.com/RupayanHalder39/MITSloanProblem11-national-team-strength-forecasting"
+url: "https://github.com/RupayanHalder39/MITSloanProblem11-national-team-strength-forecasting"
+keywords:
+  - national-team forecasting
+  - Elo ratings
+  - persistence benchmark
+  - rolling-origin evaluation
+  - football analytics
+  - MIT Sloan Sports Analytics Conference
+license: MIT
+version: 1.0.0
+date-released: "2026-09-29"
