@@ -33,6 +33,18 @@ FIGURES = {
 
 INTERNAL_DIRS = ["code", "data", "documentation", "figures", "paper", "results"]
 
+# Paths that are not part of the public release tree and must never be scanned
+# as if they were published content: the internal workspace packaging, and the
+# Git metadata directory. Scanning .git/ would make the check totals depend on
+# Git's internal state and could surface local absolute paths (config, logs,
+# hooks) that are not repository content.
+NON_PUBLIC_NAMES = {"version2", ".git", "_previous_revision_attempt"}
+
+
+def is_non_public(p) -> bool:
+    return bool(NON_PUBLIC_NAMES & set(p.parts))
+
+
 failures: list[str] = []
 checks = 0
 
@@ -235,7 +247,7 @@ section("6. Internal links and images")
 
 link_re = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 for md in sorted(ROOT.rglob("*.md")):
-    if "version2" in md.parts:
+    if is_non_public(md):
         continue
     text = md.read_text()
     for target in link_re.findall(text):
@@ -258,7 +270,7 @@ RESTRICTED_NAMES = [
     "P1_counterexample_rows.csv", "team_aliases.csv", "elo_long.csv",
 ]
 published = [str(p.relative_to(ROOT)) for p in ROOT.rglob("*")
-             if p.is_file() and "version2" not in p.parts]
+             if p.is_file() and not is_non_public(p)]
 for name in RESTRICTED_NAMES:
     check(f"absent: {name}", not any(p.endswith(name) for p in published))
 
@@ -280,7 +292,7 @@ for token in FORBIDDEN:
 
 INTERNAL_TOKENS = ["reviewer", "Reviewer", "Ruben", "comment [a]", "Comment [A]"]
 for md in sorted(ROOT.rglob("*.md")):
-    if "version2" in md.parts:
+    if is_non_public(md):
         continue
     text = md.read_text()
     for token in INTERNAL_TOKENS:
@@ -309,7 +321,7 @@ for py in sorted((ROOT / "code").rglob("*.py")):
     check(f"{py.relative_to(ROOT)} has no Problem 2 code", not hits, str(hits))
 
 for md in sorted(ROOT.rglob("*.md")):
-    if "version2" in md.parts:
+    if is_non_public(md):
         continue
     text = md.read_text()
     # Documentation legitimately names what was removed.
@@ -334,7 +346,7 @@ HOME_NEEDLE = "/" + "Users" + "/"
 WINDOWS_NEEDLE = re.compile(r"[A-Z]:\\\\")
 
 for f in sorted(ROOT.rglob("*")):
-    if not f.is_file() or "version2" in f.parts:
+    if not f.is_file() or is_non_public(f):
         continue
     if f.suffix.lower() in {".png", ".pdf", ".jpg", ".jpeg", ".gif", ".pyc"}:
         continue
